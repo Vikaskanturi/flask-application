@@ -8,7 +8,7 @@ def create_app():
     @app.route('/')
     def home():
         print("inside home function")
-        return 'Hi hi GFG43 25th april 2026  - 2:30 PM elaborate'
+        return 'Hi hi GFG43 25th april 2026  - 2:30 PM elaborate the date and time in the response'
 
     return app
 
