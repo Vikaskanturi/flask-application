@@ -10,25 +10,27 @@ pipeline {
         stage('install python depndencies') {
             steps {
                 sh 'yum install python3 -y'
-                sh 'yum install pip3 -y'
+                sh 'yum install python3-pip -y'
                 sh 'pip3 install -r requirements.txt'
             }
         }
         stage('perform tests') {
             steps {
-                sh 'pytest .'
+                sh 'pytest'
                 sh 'flake8 .' 
             }
         }
         stage('build docker image') {
             steps {
+                sh 'yum install docker -y'
+                sh 'systemctl start docker'
                 sh 'docker build -t flask-app:latest .'
             }
         }
         stage('containerize application') {
             steps {
                 sh 'docker rm -f flask-app || true'
-                sh 'docker run -d -p 8080:80 flask-app:latest'
+                sh 'docker run -dit -p 80:80 flask-app:latest'
             }
         }
     }
