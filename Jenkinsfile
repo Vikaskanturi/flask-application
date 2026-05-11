@@ -30,7 +30,7 @@ pipeline {
         stage('containerize application') {
             steps {
                 sh 'docker rm -f flask-app || true'
-                sh 'docker run -dit -p 80:80 flask-app:latest'
+                sh 'docker run -dit --name flask-app-p 80:80 flask-app:latest'
             }
         }
     }
