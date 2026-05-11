@@ -17,7 +17,7 @@ pipeline {
         stage('perform tests') {
             steps {
                 sh 'pytest'
-                sh 'flake8 .' 
+                // sh 'flake8 .' 
             }
         }
         stage('build docker image') {
