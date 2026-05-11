@@ -1,5 +1,5 @@
 pipeline {
-    agent python-agent
+    agent { label 'python-agent' }
 
     stages {
         stage('clone repo') {
@@ -9,7 +9,8 @@ pipeline {
         }
         stage('install python depndencies') {
             steps {
-                sh 'yum install python3 -pip -y'
+                sh 'yum install python3 -y'
+                sh 'yum install pip3 -y'
                 sh 'pip3 install -r requirements.txt'
             }
         }
