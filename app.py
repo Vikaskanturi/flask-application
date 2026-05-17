@@ -12,6 +12,8 @@ def create_app():
 
     return app
 
+print("Flask application instance created successfully")
+
 
 if __name__ == '__main__':
     app = create_app()
