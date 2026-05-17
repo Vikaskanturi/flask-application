@@ -3,7 +3,7 @@ from flask import Flask
 
 def create_app():
     app = Flask(__name__)
-    print("inside create_app function")
+    print("inside create_app function that creates the Flask application instance")
 
     @app.route('/')
     def home():
