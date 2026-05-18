@@ -1,22 +1,55 @@
-from flask import Flask
+import hashlib
+import os
+from flask import Flask, jsonify
 
 
 def create_app():
     app = Flask(__name__)
-    print("inside create_app function that creates the Flask application instance")
+    # Use environment variable for secret key
+    secret_key = os.environ.get(
+        'SECRET_KEY', 'dev-key-for-local-development-only'
+    )
+    app.config['SECRET_KEY'] = secret_key
 
     @app.route('/')
     def home():
-        print("inside home function")
-        return 'Hi hi GFG43 25th april 2026  - 2:30 PM elaborate the date and time in the response to make it more informative and engaging for the users. This will help them understand the context of the message better and create a more personalized experience for them. Additionally, you can also include some relevant emojis or images to make the response more visually appealing and engaging for the users. Overall, the key is to provide value and create a connection with your audience through your responses. By doing so, you can build a loyal following and establish yourself as a trusted source of information and entertainment in your niche.  Thank you for your feedback and suggestions, and I look forward to continuing to provide informative and engaging responses to my users.'
+        return 'Hello, World! GFG43'
+
+    @app.route('/hash/<text>')
+    def hash_text(text):
+        # Use SHA-256 for better security.
+        # This addresses SonarQube's vulnerability report.
+        if not text:
+            return jsonify({"error": "No text provided"}), 400
+        return hashlib.sha256(text.encode()).hexdigest()
+
+    @app.after_request
+    def add_security_headers(response):
+        # Security headers for SonarQube
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        csp = "default-src 'self'"
+        response.headers['Content-Security-Policy'] = csp
+        return response
+
+    @app.errorhandler(404)
+    def page_not_found(e):
+        return jsonify({"error": "Not Found"}), 404
+
+    @app.errorhandler(500)
+    def internal_server_error(e):
+        return jsonify({"error": "Internal Server Error"}), 500
 
     return app
 
 
-
-print("Flask application instance created successfully")
-
-
 if __name__ == '__main__':
     app = create_app()
-    app.run(host='0.0.0.0', port=80, debug=True)
+    # Use environment variables for host and port
+    host = os.environ.get('FLASK_RUN_HOST', '0.0.0.0')
+    port = int(os.environ.get('FLASK_RUN_PORT', 5000))
+    debug = os.environ.get('FLASK_DEBUG', 'False').lower() in (
+        'true', '1', 't'
+    )
+    app.run(host=host, port=port, debug=debug)
