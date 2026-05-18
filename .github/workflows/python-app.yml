@@ -33,7 +33,7 @@ jobs:
       run: |
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-    - name: Test with pytest
+    - name: Test with pytest  
       run: |
         pytest --cov=app --cov-report=xml
     - name: Upload coverage.xml report
@@ -76,6 +76,11 @@ jobs:
     runs-on: self-hosted
     needs: SonarQube-analysis
     steps:
+      - 
+        name : install docker
+        run: | 
+          sudo yum install -y docker
+          sudo systemctl start docker
       -
         name: Login to Docker Hub
         uses: docker/login-action@v4
