@@ -25,10 +25,10 @@ jobs:
         python3 --version
     - name: Install dependencies
       run: |
-        sudo yum install python3-pip -y
-        pip3 install --upgrade pip -y 
-        pip3 install flake8 pytest -y
-        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        sudo yum install -y python3-pip
+        pip3 install --upgrade pip  
+        pip3 install flake8 pytest 
+        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
     - name: Lint with flake8
       run: |
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
