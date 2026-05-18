@@ -21,10 +21,11 @@ jobs:
     - uses: actions/checkout@v4
     - name: Set up Python
       run: |
+        yum install python3 -y
         python3 --version
     - name: Install dependencies
       run: |
-        yum install python3-pip -y
+        sudo yum install python3-pip -y
         pip3 install --upgrade pip -y 
         pip3 install flake8 pytest -y
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
