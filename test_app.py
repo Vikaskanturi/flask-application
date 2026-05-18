@@ -17,3 +17,4 @@ def test_home(client):
     assert response.status_code == 200
     expected_text = 'GFG43'
     assert expected_text.encode() in response.data
+    
