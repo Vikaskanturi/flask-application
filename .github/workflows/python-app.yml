@@ -77,7 +77,7 @@ jobs:
     needs: SonarQube-analysis
     steps:
       - 
-        name : install docker and start docker service
+        name : install docker and start docker service with permissions
         run: | 
           sudo yum install -y docker
           sudo systemctl start docker
