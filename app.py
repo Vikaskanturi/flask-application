@@ -5,17 +5,15 @@ from flask import Flask, jsonify
 
 def create_app():
     app = Flask(__name__)
-    # Use environment variable for secret key
-    secret_key = os.environ.get(
-        'SECRET_KEY', 'dev-key-for-local-development-only'
-    )
-    app.config['SECRET_KEY'] = secret_key
+    # Use environment variable for secret key.
+    # Fallback to None ensures no hardcoded credential flags.
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
-    @app.route('/')
+    @app.route('/', methods=['GET'])
     def home():
         return 'Hello, World! GFG43'
 
-    @app.route('/hash/<text>')
+    @app.route('/hash/<text>', methods=['GET'])
     def hash_text(text):
         # Use SHA-256 for better security.
         # This addresses SonarQube's vulnerability report.
