@@ -7,6 +7,6 @@ RUN groupadd -r gfg && \
     pip install -r requirements.txt && \
     chown -R pythongfg:gfg /app
 
-EXPOSE 80
+EXPOSE 5000
 USER pythongfg
 CMD ["python", "app.py"]

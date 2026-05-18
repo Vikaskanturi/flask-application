@@ -1,5 +1,5 @@
-flask==2.0.1
+flask>=3.0.0
 pytest
-Werkzeug==2.0.0
+Werkzeug>=3.0.0
 flake8
 pytest-cov
